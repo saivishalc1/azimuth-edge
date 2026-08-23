@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AcademyRouteImport } from './routes/academy'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BrokerageRouteImport } from './routes/brokerage'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PlaylistsSlugRouteImport } from './routes/playlists.$slug'
 import { Route as VideosIndexRouteImport } from './routes/videos.index'
 import { Route as VideosSlugRouteImport } from './routes/videos.$slug'
@@ -33,6 +35,11 @@ const AcademyRoute = AcademyRouteImport.update({
   path: '/academy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BrokerageRoute = BrokerageRouteImport.update({
   id: '/brokerage',
   path: '/brokerage',
@@ -41,6 +48,11 @@ const BrokerageRoute = BrokerageRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlaylistsSlugRoute = PlaylistsSlugRouteImport.update({
@@ -63,8 +75,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academy': typeof AcademyRoute
+  '/admin': typeof AdminRoute
   '/brokerage': typeof BrokerageRoute
   '/contact': typeof ContactRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/playlists/$slug': typeof PlaylistsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
   '/videos/': typeof VideosIndexRoute
@@ -73,8 +87,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academy': typeof AcademyRoute
+  '/admin': typeof AdminRoute
   '/brokerage': typeof BrokerageRoute
   '/contact': typeof ContactRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/playlists/$slug': typeof PlaylistsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
   '/videos': typeof VideosIndexRoute
@@ -84,8 +100,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academy': typeof AcademyRoute
+  '/admin': typeof AdminRoute
   '/brokerage': typeof BrokerageRoute
   '/contact': typeof ContactRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/playlists/$slug': typeof PlaylistsSlugRoute
   '/videos/$slug': typeof VideosSlugRoute
   '/videos/': typeof VideosIndexRoute
@@ -96,8 +114,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academy'
+    | '/admin'
     | '/brokerage'
     | '/contact'
+    | '/sitemap.xml'
     | '/playlists/$slug'
     | '/videos/$slug'
     | '/videos/'
@@ -106,8 +126,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academy'
+    | '/admin'
     | '/brokerage'
     | '/contact'
+    | '/sitemap.xml'
     | '/playlists/$slug'
     | '/videos/$slug'
     | '/videos'
@@ -116,8 +138,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academy'
+    | '/admin'
     | '/brokerage'
     | '/contact'
+    | '/sitemap.xml'
     | '/playlists/$slug'
     | '/videos/$slug'
     | '/videos/'
@@ -127,8 +151,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AcademyRoute: typeof AcademyRoute
+  AdminRoute: typeof AdminRoute
   BrokerageRoute: typeof BrokerageRoute
   ContactRoute: typeof ContactRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   PlaylistsSlugRoute: typeof PlaylistsSlugRoute
   VideosSlugRoute: typeof VideosSlugRoute
   VideosIndexRoute: typeof VideosIndexRoute
@@ -157,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AcademyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/brokerage': {
       id: '/brokerage'
       path: '/brokerage'
@@ -169,6 +202,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/playlists/$slug': {
@@ -199,8 +239,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AcademyRoute: AcademyRoute,
+  AdminRoute: AdminRoute,
   BrokerageRoute: BrokerageRoute,
   ContactRoute: ContactRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   PlaylistsSlugRoute: PlaylistsSlugRoute,
   VideosSlugRoute: VideosSlugRoute,
   VideosIndexRoute: VideosIndexRoute,

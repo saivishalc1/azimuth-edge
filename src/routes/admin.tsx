@@ -200,7 +200,9 @@ function VideoTable({
   const drop = (index: number) => {
     if (dragIndex === null || dragIndex === index) return;
     const next = [...rows];
-    const [moved] = next.splice(dragIndex, 1);
+    const moved = next[dragIndex];
+    if (!moved) return;
+    next.splice(dragIndex, 1);
     next.splice(index, 0, moved);
     setDragIndex(null);
     void persist(next);
