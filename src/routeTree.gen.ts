@@ -14,6 +14,9 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AcademyRouteImport } from './routes/academy'
 import { Route as BrokerageRouteImport } from './routes/brokerage'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as PlaylistsSlugRouteImport } from './routes/playlists.$slug'
+import { Route as VideosIndexRouteImport } from './routes/videos.index'
+import { Route as VideosSlugRouteImport } from './routes/videos.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +43,21 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlaylistsSlugRoute = PlaylistsSlugRouteImport.update({
+  id: '/playlists/$slug',
+  path: '/playlists/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideosIndexRoute = VideosIndexRouteImport.update({
+  id: '/videos/',
+  path: '/videos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideosSlugRoute = VideosSlugRouteImport.update({
+  id: '/videos/$slug',
+  path: '/videos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +65,9 @@ export interface FileRoutesByFullPath {
   '/academy': typeof AcademyRoute
   '/brokerage': typeof BrokerageRoute
   '/contact': typeof ContactRoute
+  '/playlists/$slug': typeof PlaylistsSlugRoute
+  '/videos/$slug': typeof VideosSlugRoute
+  '/videos/': typeof VideosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +75,9 @@ export interface FileRoutesByTo {
   '/academy': typeof AcademyRoute
   '/brokerage': typeof BrokerageRoute
   '/contact': typeof ContactRoute
+  '/playlists/$slug': typeof PlaylistsSlugRoute
+  '/videos/$slug': typeof VideosSlugRoute
+  '/videos': typeof VideosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +86,41 @@ export interface FileRoutesById {
   '/academy': typeof AcademyRoute
   '/brokerage': typeof BrokerageRoute
   '/contact': typeof ContactRoute
+  '/playlists/$slug': typeof PlaylistsSlugRoute
+  '/videos/$slug': typeof VideosSlugRoute
+  '/videos/': typeof VideosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/academy' | '/brokerage' | '/contact'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/academy'
+    | '/brokerage'
+    | '/contact'
+    | '/playlists/$slug'
+    | '/videos/$slug'
+    | '/videos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/academy' | '/brokerage' | '/contact'
-  id: '__root__' | '/' | '/about' | '/academy' | '/brokerage' | '/contact'
+  to:
+    | '/'
+    | '/about'
+    | '/academy'
+    | '/brokerage'
+    | '/contact'
+    | '/playlists/$slug'
+    | '/videos/$slug'
+    | '/videos'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/academy'
+    | '/brokerage'
+    | '/contact'
+    | '/playlists/$slug'
+    | '/videos/$slug'
+    | '/videos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +129,9 @@ export interface RootRouteChildren {
   AcademyRoute: typeof AcademyRoute
   BrokerageRoute: typeof BrokerageRoute
   ContactRoute: typeof ContactRoute
+  PlaylistsSlugRoute: typeof PlaylistsSlugRoute
+  VideosSlugRoute: typeof VideosSlugRoute
+  VideosIndexRoute: typeof VideosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +171,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/playlists/$slug': {
+      id: '/playlists/$slug'
+      path: '/playlists/$slug'
+      fullPath: '/playlists/$slug'
+      preLoaderRoute: typeof PlaylistsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/videos/': {
+      id: '/videos/'
+      path: '/videos'
+      fullPath: '/videos/'
+      preLoaderRoute: typeof VideosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/videos/$slug': {
+      id: '/videos/$slug'
+      path: '/videos/$slug'
+      fullPath: '/videos/$slug'
+      preLoaderRoute: typeof VideosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -125,6 +201,9 @@ const rootRouteChildren: RootRouteChildren = {
   AcademyRoute: AcademyRoute,
   BrokerageRoute: BrokerageRoute,
   ContactRoute: ContactRoute,
+  PlaylistsSlugRoute: PlaylistsSlugRoute,
+  VideosSlugRoute: VideosSlugRoute,
+  VideosIndexRoute: VideosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
