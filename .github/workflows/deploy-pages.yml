@@ -1,0 +1,56 @@
+# Builds the static (SPA) version of the site and publishes it to GitHub Pages.
+# Lovable's own preview/publish is unaffected — it keeps using vite.config.ts.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # bun.lock points at Lovable's private package mirror, which CI can't reach,
+      # so resolve from the public npm registry instead.
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Build static site
+        run: npm run build:pages
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}/
+
+      - name: Prepare Pages artifact (SPA fallback + no Jekyll)
+        run: |
+          cp dist/client/index.html dist/client/404.html
+          touch dist/client/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/client
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
